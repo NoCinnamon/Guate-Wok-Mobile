@@ -8,7 +8,7 @@
     "scheme": "guatewokmobile",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "com.smokeyl.Guate-Wok-Mobile"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,10 +29,12 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#208AEF",
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-maps",
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true,
