@@ -1,4 +1,3 @@
-// import { Tabs } from "expo-router"
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 
 export default function TabLayout() {
@@ -22,61 +21,5 @@ export default function TabLayout() {
         <NativeTabs.Trigger.Label>Cart</NativeTabs.Trigger.Label>
       </NativeTabs.Trigger>
     </NativeTabs>
-
-    
-    // <Tabs screenOptions={{ headerShown: false }}>
-    //   <Tabs.Screen
-    //     name="index"
-    //     options={{
-    //       title: "Home",
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <Ionicons
-    //           name={focused ? "home-sharp" : "home-outline"}
-    //           color={color}
-    //           size={24}
-    //         />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="menu"
-    //     options={{
-    //       title: "Menu",
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <Ionicons
-    //           name={focused ? "restaurant" : "restaurant-outline"}
-    //           color={color}
-    //           size={24}
-    //         />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="location"
-    //     options={{
-    //       title: "Location",
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <Ionicons
-    //           name={focused ? "location" : "location-outline"}
-    //           color={color}
-    //           size={24}
-    //         />
-    //       ),
-    //     }}
-    //   />
-    //   <Tabs.Screen
-    //     name="cart"
-    //     options={{
-    //       title: "Cart",
-    //       tabBarIcon: ({ color, focused }) => (
-    //         <Ionicons
-    //           name={focused ? "cart" : "cart-outline"}
-    //           color={color}
-    //           size={24}
-    //         />
-    //       ),
-    //     }}
-    //   />
-    // </Tabs>
-  );
+  )
 }
