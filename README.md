@@ -43,7 +43,7 @@ location.tsx:
 
 
 
-### Use AsyncStorage to save the Customer Order Notes.(Storing string value) wiht useEffect()
+### - Use AsyncStorage to save the Customer Order Notes.(Storing string value) wiht useEffect()
 
 ```bsah
 npx expo install @react-native-async-storage/async-storage
@@ -74,9 +74,9 @@ async function loadNote() {
 }
 ```
 
-LoadNote() uses the getItem('key') with the key 'oederNote' to get the value out of the locoal storage where the note is saved. and store it in a variable 'saved'. then setnNote to it. 
+LoadNote() uses the getItem('key') with the key 'oederNote' to get the value out of the locoal storage where the note is saved. and store it in a variable 'saved'. then setnNote to it.
 
-### useEffect():
+### - useEffect():
 
 ```bash
 useEffect(() => {
@@ -89,7 +89,7 @@ loadNote(): "What to run"
 
 The '[]' means there is no changem so nothing to watch. When first time the Cart screen opens, React runs loadNote() once, and this is it. It wont do it on every letter user type, setNote() is the one taht does this. so put [] instead of setNote(), means the value is not in the watch list, then it wont trigger this effect. Typing stays on updateNote.
 
-### Add menu item into cart. useContext
+### - Add menu item into cart. useContext, AsyncStorage for cartItems to stay after reload app.
 
 In the menu.tsx each dish is defined as a object in a list.
 
@@ -98,4 +98,29 @@ In the menu.tsx each dish is defined as a object in a list.
 ```
 
 id and name is what i want to display after added to cart.
+
+here is the simple version ( without useState )of the how useContext used here, for easier understanding:
+
+1. create context
+2. wraps the component needed for use this context inside of the ContextProvider
+3. export the context by making a function.
+
+```bash
+
+const CartContext = createContext({
+  items: [{ id: "1", name: "Taco" }],
+});
+
+export default function CartProvider({ children }) {
+  const items = [{ id: "1", name: "Taco" }];
+  return (
+    <CartContext.Provider value={{ items }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+export function useCart() {
+  return useContext(CartContext);
+}
+```
 

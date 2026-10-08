@@ -29,7 +29,6 @@ export default function Cart() {
       setNote(saved);
     }
   }
-
   useEffect(() => {
     loadNote();
   }, []);

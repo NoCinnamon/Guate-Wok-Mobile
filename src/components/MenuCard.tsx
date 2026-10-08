@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { StyleSheet, Text, View } from "react-native";
 import Button from "./Button";
-import { router } from "expo-router";
+// import { router } from "expo-router";
 import { useCart } from "../context/CartContext";
 
 
@@ -45,6 +45,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 12,
     paddingVertical: 8,
-    // paddingHorizontal: 8,
   },
 });
