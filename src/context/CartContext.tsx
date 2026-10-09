@@ -5,11 +5,14 @@ import { useEffect } from "react";
 type CartItem = {
   id:string;
   name: string;
+  quantity: number;
 };
 
 type CartContextValue = {
   items: CartItem[];
   addItem: (name: string) => void;
+  increaseQuantity: (id: string) => void;
+  decreaseQuantity: (id: string) => void;
 };
 
 const storeCartItem = async (items:  CartItem[]) => {
@@ -25,11 +28,69 @@ export default function CartProvider({children}:{children:ReactNode}) {
   const [items, setItems] = useState<CartItem[]>([]);
 
   function addItem(name:string){
-    setItems((current) => {                                         
-      const next = [                                                // current: list already in list
-      ...current,                                                   // ' ... ' copies current list
-      { id: `${name}-${Date.now()}`, name },                        // this object aftre followed current is the new one. "Taco-1759857600000"
-      ];
+    setItems((current) => {                                                                             // current: list already in list
+      const alreadyThere = current.find((item) => item.name === name);                                     
+      const next: CartItem[] = [];
+      if ( alreadyThere ){
+        for (const item of current) {
+          if(item.name === name) {
+            next.push({
+              id: item.id,
+              name: item.name,
+              quantity: item.quantity + 1,
+            });
+          } else {
+              next.push(item);
+            }
+        }
+      } else {
+          for (const item of current) {
+            next.push(item);
+          }
+          next.push({
+            id: name,
+            name: name,
+            quantity: 1,
+          });
+        }
+      storeCartItem(next);
+      return next;
+    });
+  }
+
+  function increaseQuantity(id: string) {
+    setItems((current) => {
+      const next: CartItem[] = [];
+      for (const item of current) {
+        if (item.id === id) {
+          next.push({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity + 1,
+          });
+        } else {
+          next.push(item);
+        }
+      }
+      storeCartItem(next);
+      return next;
+    });
+  }
+
+  function decreaseQuantity(id: string) {
+    setItems((current) => {
+      const next: CartItem[] = [];
+      for (const item of current) {
+        if (item.id === id) {
+          next.push({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity - 1,
+          });
+        } else {
+          next.push(item);
+        }
+      }
       storeCartItem(next);
       return next;
     });
@@ -47,7 +108,7 @@ export default function CartProvider({children}:{children:ReactNode}) {
   }, []);
 
   return (
-    <CartContext.Provider value={{ items, addItem }}>
+    <CartContext.Provider value={{ items, addItem, increaseQuantity, decreaseQuantity }}>
       {children}
     </CartContext.Provider>
   );

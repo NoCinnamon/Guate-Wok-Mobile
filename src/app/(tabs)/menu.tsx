@@ -1,15 +1,10 @@
 import { Text, View, StyleSheet, FlatList, Pressable } from "react-native";
+import { menuItems } from "../../data/menu";
 import MenuCard from "../../components/MenuCard";
-import { useState } from "react";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from "expo-router";
+
 
 export default function Menu() {
-  const [menuItem, setMenuItem] = useState([
-    { id: "1", name: "Taco", image: require("../../../assets/images/taco.jpg") },
-    { id: "2", name: "Kimbap", image: require("../../../assets/images/kimbap.jpg") },
-    { id: "3", name: "Mango Drink", image: require("../../../assets/images/mangoDrink.jpg") },
-    { id: "4", name: "Lime Drink", image: require("../../../assets/images/limeDrink.jpg") },
-  ]);
 
     return (
       <View style={styles.container}>
@@ -17,14 +12,17 @@ export default function Menu() {
           numColumns={2}
           contentContainerStyle={styles.list}
           keyExtractor={(item) => item.id}
-          data={menuItem}
+          data={menuItems}
           renderItem={({item}) => (
-            <MenuCard name={item.name} image={item.image} />
+            <MenuCard name={item.name} image={item.image} 
+            onPress={() => 
+              router.push({
+                pathname: "/detail",
+                params: { id: item.id },
+              })
+            }/>
           )}
         />
-
-
-
       </View>
     );
   }

@@ -2,7 +2,6 @@ import CartProvider from "@/context/CartContext";
 import { Image } from "expo-image";
 import { Stack, router } from "expo-router";
 import { Pressable, StyleSheet } from "react-native";
-// import { CartProvider } from "../context/CartContext";
 
 
 export default function RootLayout() {
@@ -35,8 +34,11 @@ export default function RootLayout() {
             headerShadowVisible: false,
           }}
         />
+
+        <Stack.Screen name="detail" options={{ headerShown: false }}/>
+
       </Stack>
-    </CartProvider>
+    </CartProvider>    
   );
 }
 
