@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, View, ScrollView } from "react-native";
 import Button from "../../components/Button";
 
 export default function Index() {
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  // content: {
+  //   flexGrow: 1,
+  // },
   background: {
     flex: 1,
   },
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.80)",
     alignItems: "center",
     gap: 16,
-    marginTop: 480,
+    marginTop: 400,
   },
   cardTitle: {
     color: "#1d4ed8",

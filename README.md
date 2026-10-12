@@ -1,3 +1,14 @@
+## App summary:
+
+This is a food truck online menu brosing app. It includs:
+wehlcome home view, 
+
+- Menu, for brose the menu item.Click the picture, it will bring you to detail of this item.
+- Detail: shows the ingreadiants for the current item, as well as a add button to add it into cart.
+- Location(only ios for now): to check the current location for the foodtruck.
+- Cart: shows the items has been added to the cart and a option of changing the quantity of the item and another option for delete the item.  
+User can alos leave the notes here for special request to the chef, such as "no onion"
+
 ## Bottom navigation
 
 `import { NativeTabs } from "expo-router/unstable-native-tabs";`
@@ -12,6 +23,8 @@ To change a label or icon, edit that button's `NativeTabs.Trigger` in `_layout.t
 `Trigger`: change what the user sees after tapping, edit the matching screen file.
 
 ## Location
+
+
 
 #### Show current location of the food truck on ios map.
 
@@ -124,3 +137,31 @@ export function useCart() {
 }
 ```
 
+
+
+### - minus/plus counter button:
+
+function increaseQuantity() / decreaseQuantity() are onplemented in `CartContext.tsx`.
+
+ because that file owns the cart list. The plus and minus buttons only start the change. They do not change the number themselves. 
+ In `CartCounter.tsx`, the component CartConter at the minus/plus icon, the onPress() is calling the function decrease/increaseQuantity()
+ `cart.tsx` connects the buttons to the cart. It gets both functions from `useCart()`, then passes the item's id.
+
+at the end of `cartContext.tsx` useCar() is exported, and it has a value of cartContext, at the `zcart.tsx` when need to use context, specifically the value in side the context, need to remember to add the value in useCart() :
+
+```bash
+const { items, decreaseQuantity, increaseQuantity, } = useCart();                      
+```
+
+//  this is the function a screen calls to get the cart.
+
+
+
+### - delete item:  
+when clicking trashcan icon, for example, deleting the taco, when the loop sees the id of the taco is same as the taco i want to delete, then it wont call the `next.push(item)`, so the item nees to be deleted wont in next list. When return next, it willsend the 'next list' to setItems, now, the items wont have taco. this is how taco disapper from the screen.
+
+
+### Component: CartCounter
+
+This is a component taht shows minus/plus button for quantity of the items in cart.
+It has the value of in/decrease functionnality and a quantity in between the 2 buttons.

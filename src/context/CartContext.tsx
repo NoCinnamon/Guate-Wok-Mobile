@@ -13,6 +13,7 @@ type CartContextValue = {
   addItem: (name: string) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
+  deleteItem: ( id: string ) => void;
 };
 
 const storeCartItem = async (items:  CartItem[]) => {
@@ -96,6 +97,19 @@ export default function CartProvider({children}:{children:ReactNode}) {
     });
   }
 
+  function deleteItem(id:string) {
+    setItems((current) => {
+      const next: CartItem[] = [];
+      for (const item of current) {
+        if (item.id !== id) {                   // if id===id, it supposed be this way, turn it into id !== id, it wont push
+          next.push(item);
+        }
+      }
+      storeCartItem(next);
+      return next;
+    });
+  }
+
   async function loadCartItem() {
     const saved = await AsyncStorage.getItem("cartItems");
     console.log("saved cart items:", saved);
@@ -108,7 +122,7 @@ export default function CartProvider({children}:{children:ReactNode}) {
   }, []);
 
   return (
-    <CartContext.Provider value={{ items, addItem, increaseQuantity, decreaseQuantity }}>
+    <CartContext.Provider value={{ items, addItem, increaseQuantity, decreaseQuantity, deleteItem }}>
       {children}
     </CartContext.Provider>
   );

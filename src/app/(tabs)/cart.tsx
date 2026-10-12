@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet,ScrollView } from "react-native";
 import{ useEffect, useState } from "react";
 import OrderNote from "../../components/OrderNote";
 import { useCart } from "../../context/CartContext";
@@ -16,10 +16,9 @@ const storeNoteData = async (note:string) => {
 };
 
 export default function Cart() {
-  const { items, increaseQuantity, decreaseQuantity } = useCart();
+  const { items, decreaseQuantity, increaseQuantity, deleteItem } = useCart();                      //  the function a screen calls to get the cart.
   const [note,setNote] = useState("");
   
-
 
   function updateNote(text: string) {
     setNote(text);
@@ -38,7 +37,9 @@ export default function Cart() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} 
+     contentContainerStyle={styles.content}>
+
       <View style={styles.cartItems}>
         <Text style={styles.cartTitleText}> My Cart:</Text>
         {items.map((item) => (
@@ -50,13 +51,13 @@ export default function Cart() {
               onDecrease={() => decreaseQuantity(item.id)}
 
             />
-            <Feather name="trash" size={20} color="#c1c7c3" />
+            <Feather name="trash" size={20} color="#c1c7c3" onPress={() => deleteItem(item.id)}/>
           </View>
         ))}
       </View>
       <OrderNote note={note}
       onChangeNote={updateNote}/>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -66,6 +67,9 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: "#F4EFE6",
     paddingTop: 110,
+  },
+  content: {
+    flexGrow: 1,
   },
   cartItems: {
     backgroundColor: "#FFFFFF",
