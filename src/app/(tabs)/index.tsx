@@ -1,6 +1,7 @@
 import { router } from "expo-router";
-import { ImageBackground, StyleSheet, Text, View, ScrollView } from "react-native";
+import { ImageBackground, StyleSheet, Text, View, ScrollView, Settings } from "react-native";
 import Button from "../../components/Button";
+
 
 export default function Index() {
   return (
@@ -11,7 +12,7 @@ export default function Index() {
         style={styles.background}
       >
         <Text style={styles.welcome}>Welcome</Text>
-
+        
         <View style={styles.card}>
           <Text style={styles.cardTitle}>READY TO ORDER?</Text>
           <View style={styles.homePageButtons}>
@@ -47,6 +48,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "bold",
     backgroundColor: "transparent",
+  },
+  settingButton: {
+    color: "rgba(255,255,255,0.80)",
+    position: "absolute",
+    top: 110,
+    right: 26,
   },
   card: {
     marginHorizontal: 16,

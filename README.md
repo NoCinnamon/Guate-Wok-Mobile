@@ -9,6 +9,8 @@ wehlcome home view,
 - Cart: shows the items has been added to the cart and a option of changing the quantity of the item and another option for delete the item.  
 User can alos leave the notes here for special request to the chef, such as "no onion"
 
+npx expo run:ios
+
 ## Bottom navigation
 
 `import { NativeTabs } from "expo-router/unstable-native-tabs";`
@@ -155,11 +157,9 @@ const { items, decreaseQuantity, increaseQuantity, } = useCart();
 
 //  this is the function a screen calls to get the cart.
 
+### - delete item:
 
-
-### - delete item:  
 when clicking trashcan icon, for example, deleting the taco, when the loop sees the id of the taco is same as the taco i want to delete, then it wont call the `next.push(item)`, so the item nees to be deleted wont in next list. When return next, it willsend the 'next list' to setItems, now, the items wont have taco. this is how taco disapper from the screen.
-
 
 ### Component: CartCounter
 

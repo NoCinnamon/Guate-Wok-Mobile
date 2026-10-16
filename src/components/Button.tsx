@@ -1,4 +1,6 @@
 import { Pressable, StyleSheet, Text } from "react-native";
+import { useTheme } from "@/context/ThemeContext";
+
 
 export default function Button({
   buttonName,
@@ -10,14 +12,15 @@ export default function Button({
   style?: object;
 
 }){
+  const { theme } = useTheme();
 return (
   <Pressable
-    style={[styles.button, style]}
-    onPress={onPress}
+  style={[styles.button, { backgroundColor: theme.button }, style]}
+  onPress={onPress}
   >
-    <Text style={styles.buttonText}>
-      {buttonName}
-    </Text>
+  <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+    {buttonName}
+  </Text>
   </Pressable>
   
 )}
