@@ -17,7 +17,7 @@ export default function RootLayout() {
                 type: "custom",
                 hidesSharedBackground: true,
                 element: (
-                  <Pressable onPress={() => router.navigate("/")}>
+                  <Pressable style={styles.logoButton} onPress={() => router.navigate("/")}>
                     <Image
                       source={require("../../assets/images/truckIcon.png")}
                       style={styles.logo}
@@ -25,6 +25,13 @@ export default function RootLayout() {
                     />
                   </Pressable>
                 ),
+              },
+            ],
+            unstable_headerRightItems: () => [
+              {
+                type: "custom",
+                hidesSharedBackground: true,
+                element: <ThemeSetting />,
               },
             ],
           }}
@@ -42,13 +49,17 @@ export default function RootLayout() {
           <Stack.Screen name="theme" options={{ headerShown: false }} />
         
         </Stack>
-        <ThemeSetting/>
       </CartProvider>
     </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({          // touch target 
+  logoButton: {
+    width: 140,
+    height: 48,
+    justifyContent: "center",
+  },
   logo: {
     width: 140,
     height: 40,

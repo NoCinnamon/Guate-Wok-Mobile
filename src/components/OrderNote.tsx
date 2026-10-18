@@ -1,4 +1,5 @@
 import { StyleSheet, View , Text, TextInput} from "react-native";
+import { useTheme } from "../context/ThemeContext";
 
 export default function OrderNote ({
   note,
@@ -7,10 +8,11 @@ export default function OrderNote ({
   note:string;
   onChangeNote: (text: string) => void;
 }){
+  const { theme } = useTheme();
   return (
     <View style={styles.noteCard}>
-      <Text style={styles.noteText}>Additional Information? </Text>
-      <TextInput style={styles.input}
+      <Text style={[styles.noteText, { color: theme.text }]}>Additional Information? </Text>
+      <TextInput style={[styles.input, { color: theme.text }]}
       value={note}
       onChangeText={onChangeNote}
       placeholder="Anything else we should know?"

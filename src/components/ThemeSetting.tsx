@@ -1,30 +1,38 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
-import { router } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { themes, useTheme } from "../context/ThemeContext";
+import { router, usePathname } from "expo-router";
+import { Pressable, StyleSheet, View } from "react-native";
+import { useTheme } from "../context/ThemeContext";
+
 
 export default function ThemeButton() {
-  const { setTheme } = useTheme();
-  const [open, setOpen] = useState(false);
+
+  const {theme} = useTheme();
+  const pathname = usePathname();
+  if ( pathname === "/location") {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => router.push("/theme")}>
-        <Ionicons name="settings" size={28} color="rgba(255,255,255,0.80)" />
+      <Pressable style={styles.gearIcon} onPress={() => router.push("/theme")}>
+        <Ionicons name="settings" size={28} color="#757575" />
       </Pressable>
-
-      
-    
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    top: 110,
-    right: 26,
+    width: 48,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  gearIcon: {
+    width: 48,
+    height: 48,
+    alignItems: "center",
+    justifyContent: "center",
   },
   menu: {
     marginTop: 8,

@@ -5,6 +5,7 @@ import OrderNote from "../../components/OrderNote";
 import { useCart } from "../../context/CartContext";
 import { Feather } from "@expo/vector-icons";
 import CartCounter  from "../../components/CartCounter"
+import { useTheme } from "../../context/ThemeContext";
 
 
 const storeNoteData = async (note:string) => {
@@ -18,6 +19,7 @@ const storeNoteData = async (note:string) => {
 export default function Cart() {
   const { items, decreaseQuantity, increaseQuantity, deleteItem } = useCart();                      //  the function a screen calls to get the cart.
   const [note,setNote] = useState("");
+  const { theme } = useTheme();
   
 
   function updateNote(text: string) {
@@ -36,15 +38,16 @@ export default function Cart() {
     loadNote();
   }, []);
 
+
   return (
-    <ScrollView style={styles.container} 
+    <ScrollView style={[styles.container, { backgroundColor: theme.background }]} 
      contentContainerStyle={styles.content}>
 
       <View style={styles.cartItems}>
-        <Text style={styles.cartTitleText}> My Cart:</Text>
+        <Text style={[styles.cartTitleText, { color: theme.text }]}> My Cart:</Text>
         {items.map((item) => (
           <View key={item.id} style={styles.itemRow}>
-            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={[styles.itemName, { color: theme.text }]}>{item.name}</Text>
             <CartCounter 
               quantity={item.quantity || 1} 
               onIncrease={() => increaseQuantity(item.id)}

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import { router } from "expo-router";
 import { themes, useTheme } from "../context/ThemeContext";
 
@@ -14,7 +14,7 @@ export default function Theme() {
         <Pressable
           key={item.name}
           style={[styles.button, { backgroundColor: item.button }]}
-          onPress={() => setTheme(item)}
+          onPress={() => {setTheme(item);  Alert.alert("Theme set", `${item.name} is now the theme.`);}}
         >
           <Text style={[styles.buttonText, { color: item.buttonText }]}>
             {item.name}

@@ -26,8 +26,6 @@ To change a label or icon, edit that button's `NativeTabs.Trigger` in `_layout.t
 
 ## Location
 
-
-
 #### Show current location of the food truck on ios map.
 
 enter the location menuly in location.tsx :
@@ -38,8 +36,6 @@ const truckLocation = {
   longitude: -90.5069,
 };
 ```
-
-
 
 ## Location Map
 
@@ -55,8 +51,6 @@ location.tsx:
 `import { AppleMaps } from "expo-maps";`
 
 ## Cart
-
-
 
 ### - Use AsyncStorage to save the Customer Order Notes.(Storing string value) wiht useEffect()
 
@@ -139,8 +133,6 @@ export function useCart() {
 }
 ```
 
-
-
 ### - minus/plus counter button:
 
 function increaseQuantity() / decreaseQuantity() are onplemented in `CartContext.tsx`.
@@ -165,3 +157,42 @@ when clicking trashcan icon, for example, deleting the taco, when the loop sees 
 
 This is a component taht shows minus/plus button for quantity of the items in cart.
 It has the value of in/decrease functionnality and a quantity in between the 2 buttons.
+
+## HIG
+
+1. https://m3.material.io/foundations/designing/structure 
+Touch and pointer target sizes
+
+```bash
+  const styles = StyleSheet.create({          // touch target 
+  logoButton: {
+    width: 140,
+    height: 48,
+    justifyContent: "center",
+  },
+  logo: {
+    width: 140,
+    height: 40,
+    backgroundColor: "transparent",
+    marginLeft: -36,
+  },
+```
+
+- In `m3.material.io`, it saying "For example, an icon may appear to be 24 x 24dp, but the padding surrounding it comprises the full 48 x 48dp touch target."
+
+My truck icon is 40 x 140 so I made the target to be 140 x 48 without shink the icon.
+
+
+2. https://m3.material.io/components/navigation-bar/overview
+Navigation bar. 
+"A phone app uses a bottom bar with 3 to 5 fixed destinations. Each one has an icon and a label."
+
+My app has four: Home, Menu, Location, and Cart. Each trigger has an icon and a label in src/app/(tabs)/_layout.tsx.
+
+
+3. https://m3.material.io/components/cards/specs
+Cards. 
+"A card groups one subject on its own surface. The spec uses 16dp of padding inside the card."
+
+In src/app/(tabs)/cart.tsx, the cart list and the order note in white cards with padding.
+In src/components/MenuCard.tsx, Each menu dish is its own card with padding 16.

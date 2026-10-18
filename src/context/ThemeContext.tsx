@@ -4,11 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const themes = [
   { name: "Default", background: "#F4EFE6", text: "#1d4ed8", button: "#f22613", buttonText: "#ffffff", isDark: false },
-  { name: "Black", background: "#000000", text: "#ffffff", button: "#333333", buttonText: "#ffffff", isDark: true },
+  { name: "Black", background: "#000000", text: "#000000", button: "#333333", buttonText: "#ffffff", isDark: true },
   { name: "Purple", background: "#f3e8ff", text: "#3b0764", button: "#6b21a8", buttonText: "#ffffff", isDark: false },
-  { name: "pink", background: "#fce7f3", text: "#831843", button: "#db2777", buttonText: "#1a040e", isDark: true },
   { name: "Green", background: "#ecfdf5", text: "#064e3b", button: "#047857", buttonText: "#ffffff", isDark: false },
-  { name: "Blue", background: "#0f172a", text: "#ffffff", button: "#1d4ed8", buttonText: "#ffffff", isDark: true },
+  { name: "Blue", background: "#0f172a", text: "##1d4ed8", button: "#1d4ed8", buttonText: "#ffffff", isDark: true },
 ]
 
 const ThemeContext = createContext({
