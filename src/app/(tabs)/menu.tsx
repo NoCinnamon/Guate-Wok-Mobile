@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, FlatList, Pressable } from "react-native";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 import { menuItems } from "../../data/menu";
 import MenuCard from "../../components/MenuCard";
 import { router } from "expo-router";
@@ -37,7 +37,5 @@ const styles = StyleSheet.create({
     paddingTop: 110,
   },
   addButton: {
-
   }
-
 });

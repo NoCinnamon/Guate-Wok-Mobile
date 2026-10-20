@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import Button from "./Button";
 import { useCart } from "../context/CartContext";
 
@@ -15,6 +15,8 @@ export default function MenuCard({
   onPress: () => void;
 }) {
   const { addItem } = useCart();
+
+
   return (
     <View style={styles.cardShadow}>
       <View style={styles.card}>
@@ -22,7 +24,12 @@ export default function MenuCard({
           <Image source={image} style={styles.image} contentFit="cover" />
         </Pressable>
         <Text style={styles.name}>{name}</Text>
-        <Button buttonName='Add' onPress={() => addItem(name)} style={styles.addButton} />
+          <Button buttonName='Add' 
+           onPress={() => {
+            addItem(name);
+            Alert.alert( `${name} is added to cart `);
+          }}
+          style={styles.addButton} />
       </View>
     </View>
   );

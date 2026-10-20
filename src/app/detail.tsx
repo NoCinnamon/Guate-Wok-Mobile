@@ -3,7 +3,7 @@ import { menuItems } from "@/data/menu";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import CartCounter from "../components/CartCounter";
 
 export default function Detail() {
@@ -41,11 +41,13 @@ export default function Detail() {
           if (item) {
             addItem(item.name, quantity);
           }
+          Alert.alert( `${item?.name} is added to cart `);
         }}
         style={styles.addToCartButton}
       >
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </Pressable>
+
     </View>
   );
 }
@@ -92,7 +94,6 @@ const styles = StyleSheet.create({
     color: "#1f2937",
     fontSize: 16,
     lineHeight: 24,
-    // padding: 8,
   },
   addToCartButton: {
     backgroundColor: "#f22613",

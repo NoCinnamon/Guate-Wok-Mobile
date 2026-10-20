@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, View, Alert } from "react-native";
-import { router } from "expo-router";
 import { themes, useTheme } from "../context/ThemeContext";
 
 export default function Theme() {
