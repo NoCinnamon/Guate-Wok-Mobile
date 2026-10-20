@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 12,
     gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    elevation: 6,
   },
   noteText: {
     color: "#1d4ed8",
@@ -38,8 +43,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   input: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 8,
     fontSize: 16,
     color: "#1c1917",
     textAlignVertical: "top",

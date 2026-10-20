@@ -1,16 +1,28 @@
+import { useEffect, useRef } from "react";
 import { Text, View, StyleSheet, Platform } from "react-native";
-import { AppleMaps } from "expo-maps";
+import { AppleMaps, useLocationPermissions } from "expo-maps";
 
 const truckLocation = {
-  latitude: 14.6349,
-  longitude: -90.5069,
+  latitude: 37.104472,
+  longitude: -113.565194,
 };
 
 export default function Location() {
-  if (Platform.OS != 'ios') {
+  const [status, requestPermission] = useLocationPermissions();
+  const asked = useRef(false);
+
+  useEffect(() => {
+    if (asked.current || !status || status.granted || !status.canAskAgain) {
+      return;
+    }
+    asked.current = true;
+    void requestPermission();
+  }, [status, requestPermission]);
+
+  if (Platform.OS !== "ios") {
     return (
       <View style={styles.location}>
-        <Text> Just for iphone now.</Text>
+        <Text>Just for iPhone now.</Text>
       </View>
     );
   }
@@ -18,6 +30,8 @@ export default function Location() {
     <AppleMaps.View
       style={{ flex: 1 }}
       cameraPosition={{ coordinates: truckLocation, zoom: 15 }}
+      properties={{ isMyLocationEnabled: status?.granted === true }}
+      uiSettings={{ myLocationButtonEnabled: true }}
       markers={[
         {
           id: "truck",

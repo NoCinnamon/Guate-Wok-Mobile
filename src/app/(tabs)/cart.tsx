@@ -44,7 +44,7 @@ export default function Cart() {
      contentContainerStyle={styles.content}>
 
       <View style={styles.cartItems}>
-        <Text style={[styles.cartTitleText, { color: theme.text }]}> My Cart:</Text>
+        <Text style={[styles.cartTitleText, { color: theme.text }]}> My Items:</Text>
         {items.map((item) => (
           <View key={item.id} style={styles.itemRow}>
             <Text style={[styles.itemName, { color: theme.text }]}>{item.name}</Text>
@@ -52,7 +52,6 @@ export default function Cart() {
               quantity={item.quantity || 1} 
               onIncrease={() => increaseQuantity(item.id)}
               onDecrease={() => decreaseQuantity(item.id)}
-
             />
             <Feather name="trash" size={20} color="#c1c7c3" onPress={() => deleteItem(item.id)}/>
           </View>
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, 
     backgroundColor: "#F4EFE6",
-    paddingTop: 110,
+    paddingTop: 16,
   },
   content: {
     flexGrow: 1,
@@ -81,6 +80,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 12,
     gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    elevation: 6,
   },
   cartTitleText: {
     color: "#1d4ed8",
@@ -95,5 +99,6 @@ const styles = StyleSheet.create({
   },
   itemName: {
     flex: 1,
+    fontSize: 16,
   },
 });

@@ -10,7 +10,7 @@ type CartItem = {
 
 type CartContextValue = {
   items: CartItem[];
-  addItem: (name: string) => void;
+  addItem: (name: string, count?: number) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
   deleteItem: ( id: string ) => void;
@@ -28,7 +28,7 @@ const CartContext = createContext<CartContextValue | null>(null);
 export default function CartProvider({children}:{children:ReactNode}) {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  function addItem(name:string){
+  function addItem(name: string, count = 1){
     setItems((current) => {                                                                             // current: list already in list
       const alreadyThere = current.find((item) => item.name === name);                                     
       const next: CartItem[] = [];
@@ -38,7 +38,7 @@ export default function CartProvider({children}:{children:ReactNode}) {
             next.push({
               id: item.id,
               name: item.name,
-              quantity: item.quantity + 1,
+              quantity: item.quantity + count,
             });
           } else {
               next.push(item);
@@ -51,7 +51,7 @@ export default function CartProvider({children}:{children:ReactNode}) {
           next.push({
             id: name,
             name: name,
-            quantity: 1,
+            quantity: count,
           });
         }
       storeCartItem(next);

@@ -17,7 +17,7 @@ export default function CartCounter(
       <Pressable style={styles.minusButton} onPress={onDecrease}>
         <AntDesign name="minus" size={12} color="#4b5563" />
       </Pressable>
-      <Text style={styles.quantity}>{quantity || 1}</Text>
+      <Text style={styles.quantity}>{quantity}</Text>
       <Pressable style={styles.plusButton} onPress={onIncrease}>
         <AntDesign name="plus" size={12} color="#ffffff" />
       </Pressable>

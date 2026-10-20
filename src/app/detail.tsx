@@ -1,40 +1,51 @@
-import { Ionicons } from "@expo/vector-icons";
-import { router, useLocalSearchParams } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useCart } from "@/context/CartContext";
 import { menuItems } from "@/data/menu";
 import { Image } from "expo-image";
-import { useCart } from "@/context/CartContext";
+import { useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import CartCounter from "../components/CartCounter";
 
 export default function Detail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const item = menuItems.find((menuItem) => menuItem.id === id);
   const { addItem } = useCart();
-
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <View style={styles.container}>
-      {/* <Pressable onPress={() => router.back()} style={styles.backArrow}>
-        <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
-      </Pressable> */}
-      {item && (
-        <Image source={item.image} style={styles.detailImage} contentFit="cover" />
-      )}
       <View style={styles.igrediantCard}>
+        {item && (
+          <Image
+            source={item.image}
+            style={styles.detailImage}
+            contentFit="cover"
+          />
+        )}
+        <View style={styles.nameAndCounter}>
+          <Text style={styles.ingredientsTitle}>{item?.name}</Text>
+          <CartCounter
+            onIncrease={() => setQuantity((current) => current + 1)}
+            onDecrease={() =>
+              setQuantity((current) => (current > 1 ? current - 1 : 1))
+            }
+            quantity={quantity}
+          />
+        </View>
         <Text style={styles.ingredientsTitle}>Main Ingredients</Text>
         <Text style={styles.ingredientsText}>{item?.ingredients}</Text>
       </View>
 
-      <Pressable onPress={() => {
-        if (item){
-          addItem(item.name);
-        }
-      }} style={styles.addToCartButton}>
+      <Pressable
+        onPress={() => {
+          if (item) {
+            addItem(item.name, quantity);
+          }
+        }}
+        style={styles.addToCartButton}
+      >
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </Pressable>
-      
-
-
-
     </View>
   );
 }
@@ -42,13 +53,9 @@ export default function Detail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4EFE6",
-    paddingTop: 60,
+    backgroundColor: "#ffffff",
+    paddingTop: 16,
     paddingHorizontal: 16,
-  },
-  backArrow: {
-    alignSelf: "flex-start",
-    marginBottom: 24,
   },
   id: {
     fontSize: 24,
@@ -59,12 +66,22 @@ const styles = StyleSheet.create({
     height: 280,
     borderRadius: 16,
   },
+  nameAndCounter: {
+    paddingTop: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   igrediantCard: {
     backgroundColor: "#FFFFFF",
     borderRadius: 16,
-    padding: 16,
-    marginTop: 16,
     gap: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    elevation: 6,
+    padding: 16,
   },
   ingredientsTitle: {
     color: "#1d4ed8",
@@ -75,6 +92,7 @@ const styles = StyleSheet.create({
     color: "#1f2937",
     fontSize: 16,
     lineHeight: 24,
+    // padding: 8,
   },
   addToCartButton: {
     backgroundColor: "#f22613",

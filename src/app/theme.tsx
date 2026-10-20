@@ -27,10 +27,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 16,
   },
-  back: {
-    fontSize: 18,
-    marginBottom: 16,
-  },
   button: {
     width: "100%",
     borderWidth: 1,

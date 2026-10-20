@@ -1,7 +1,6 @@
 import { Image } from "expo-image";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import Button from "./Button";
-// import { router } from "expo-router";
 import { useCart } from "../context/CartContext";
 
 
@@ -17,24 +16,36 @@ export default function MenuCard({
 }) {
   const { addItem } = useCart();
   return (
-    <View style={styles.card}>
-      <Pressable onPress={onPress}>
-        <Image source={image} style={styles.image} contentFit="cover" />
-      </Pressable>
-      <Text style={styles.name}>{name}</Text>
-      <Button buttonName='Add' onPress={() => addItem(name)} style={styles.addButton} />
+    <View style={styles.cardShadow}>
+      <View style={styles.card}>
+        <Pressable onPress={onPress}>
+          <Image source={image} style={styles.image} contentFit="cover" />
+        </Pressable>
+        <Text style={styles.name}>{name}</Text>
+        <Button buttonName='Add' onPress={() => addItem(name)} style={styles.addButton} />
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
-  card: {
+  cardShadow: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    overflow: "hidden",
     marginHorizontal: 10,
     marginVertical: 10,
+    borderRadius: 16,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.22,
+    shadowRadius: 8,
+    elevation: 6,
   },
+  card: {
+    borderRadius: 16,
+    overflow: "hidden",
+    backgroundColor: "#FFFFFF",
+  },
+
   image: {
     width: "100%",
     height: 140,

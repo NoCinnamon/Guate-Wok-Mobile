@@ -32,7 +32,6 @@ export default function Menu() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F4EFE6",
   },
   list: {
     paddingTop: 110,

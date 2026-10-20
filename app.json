@@ -29,7 +29,13 @@
           "imageWidth": 76
         }
       ],
-      "expo-maps",
+      [
+        "expo-maps",
+        {
+          "requestLocationPermission": true,
+          "locationPermission": "Allow Guate Wok to use your location to show you on the map next to the truck."
+        }
+      ],
       [
         "expo-build-properties",
         {

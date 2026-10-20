@@ -11,6 +11,9 @@ User can alos leave the notes here for special request to the chef, such as "no 
 
 npx expo run:ios
 
+Wireframe:
+![Wireframe](assets/images/appWireframe.jpg)
+
 ## Bottom navigation
 
 `import { NativeTabs } from "expo-router/unstable-native-tabs";`
@@ -24,20 +27,25 @@ The bar at the bottom is a native tab bar. Each navigation button opens the scre
 To change a label or icon, edit that button's `NativeTabs.Trigger` in `_layout.tsx`.  
 `Trigger`: change what the user sees after tapping, edit the matching screen file.
 
-## Location
+## Location services (Mobile Device Functionality )
 
 #### Show current location of the food truck on ios map.
 
-enter the location menuly in location.tsx :
+The food truck location menuly set in location.tsx (so far, I set it at Utah Tech):
 
 ```bash
 const truckLocation = {
-  latitude: 14.6349,
-  longitude: -90.5069,
+  latitude: 37.104472,
+  longitude: -113.565194,
 };
 ```
 
-## Location Map
+For user location, when opening app, it will ask ithe permission of using the location. After selecting the option, useLocationPermissions() reads whether this app is allowed to use location, it returns the current status and `requestPermission()`.
+The status is set to false to begin, useEffect calls `requestPermission()` once. if it is asked, it stops this effect of asking the permission on every render.
+
+In DeviceHub, Device -> Location -> then pick a location, it will appear in a blue dot, which shows it is the user location, so the user can see how far from it to the food truck.
+
+## Location Map 
 
 Platform.OS = 'ios':  
 package( expo-map ): `npx expo install expo-maps`
@@ -49,6 +57,21 @@ two other things to install so map could run on the iPhone:
 
 location.tsx:  
 `import { AppleMaps } from "expo-maps";`
+
+
+
+iOS will only show that permission ask dialog if the installed app contains a reason string, which is declared in `app.json` on the expo-maps plugin:
+
+```bash
+# # set to ture tells expo-map plugin to add location permission to the iOS app.
+"expo-maps",
+{
+  "requestLocationPermission": true,  
+  "locationPermission": "Allow Guate Wok to use your location to show you on the map next to the truck."
+}
+```
+
+
 
 ## Cart
 
@@ -160,7 +183,8 @@ It has the value of in/decrease functionnality and a quantity in between the 2 b
 
 ## HIG
 
-1. https://m3.material.io/foundations/designing/structure 
+1. https://m3.material.io/foundations/designing/structure
+
 Touch and pointer target sizes
 
 ```bash
@@ -182,15 +206,15 @@ Touch and pointer target sizes
 
 My truck icon is 40 x 140 so I made the target to be 140 x 48 without shink the icon.
 
-
 2. https://m3.material.io/components/navigation-bar/overview
+
 Navigation bar. 
 "A phone app uses a bottom bar with 3 to 5 fixed destinations. Each one has an icon and a label."
 
 My app has four: Home, Menu, Location, and Cart. Each trigger has an icon and a label in src/app/(tabs)/_layout.tsx.
 
-
 3. https://m3.material.io/components/cards/specs
+
 Cards. 
 "A card groups one subject on its own surface. The spec uses 16dp of padding inside the card."
 
