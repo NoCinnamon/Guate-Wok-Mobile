@@ -7,9 +7,6 @@ export default function Theme() {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => router.back()}>
-        <Text style={styles.back}>Back</Text>
-      </Pressable>
       {themes.map((item) => (
         <Pressable
           key={item.name}
@@ -27,7 +24,7 @@ export default function Theme() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 160,
+    paddingTop: 60,
     paddingHorizontal: 16,
   },
   back: {

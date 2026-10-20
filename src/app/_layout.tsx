@@ -4,6 +4,8 @@ import { Image } from "expo-image";
 import { Stack, router } from "expo-router";
 import { Pressable, StyleSheet } from "react-native";
 import ThemeSetting from "../components/ThemeSetting";
+import { Ionicons } from "@expo/vector-icons";
+
 
 
 export default function RootLayout() {
@@ -45,9 +47,20 @@ export default function RootLayout() {
             }}
           />
 
-          <Stack.Screen name="detail" options={{ headerShown: false }} />
-          <Stack.Screen name="theme" options={{ headerShown: false }} />
-        
+          <Stack.Screen name="detail" options={{ headerShown: true }} >
+            <Stack.Toolbar placement="left">
+              <Pressable onPress={() => router.back()} style={styles.backArrow}>
+                <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
+              </Pressable>
+            </Stack.Toolbar>
+          </Stack.Screen>
+          <Stack.Screen name="theme" options={{ headerShown: false }} >
+            <Stack.Toolbar placement="left">
+              <Pressable onPress={() => router.back()} style={styles.backArrow}>
+                <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
+              </Pressable>
+            </Stack.Toolbar>
+          </Stack.Screen>
         </Stack>
       </CartProvider>
     </ThemeProvider>
@@ -65,6 +78,10 @@ const styles = StyleSheet.create({          // touch target
     height: 40,
     backgroundColor: "transparent",
     marginLeft: -36,
+  },
+  backArrow: {
+    alignSelf: "flex-start",
+    marginBottom: 24,
   },
   screen: {
     flex: 1,

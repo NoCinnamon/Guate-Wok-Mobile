@@ -13,9 +13,9 @@ export default function Detail() {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => router.back()} style={styles.backArrow}>
+      {/* <Pressable onPress={() => router.back()} style={styles.backArrow}>
         <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
-      </Pressable>
+      </Pressable> */}
       {item && (
         <Image source={item.image} style={styles.detailImage} contentFit="cover" />
       )}
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4EFE6",
-    paddingTop: 110,
+    paddingTop: 60,
     paddingHorizontal: 16,
   },
   backArrow: {
