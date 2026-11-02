@@ -6,6 +6,8 @@ import { useCart } from "../../context/CartContext";
 import { Feather } from "@expo/vector-icons";
 import CartCounter  from "../../components/CartCounter"
 import { useTheme } from "../../context/ThemeContext";
+import { Image } from "expo-image";
+import { menuItems } from "@/data/menu";
 
 
 const storeNoteData = async (note:string) => {
@@ -45,8 +47,13 @@ export default function Cart() {
 
       <View style={styles.cartItems}>
         <Text style={[styles.cartTitleText, { color: theme.text }]}> My Items:</Text>
-        {items.map((item) => (
+        {items.map((item) => {
+          const picture = menuItems.find((menuItem) => menuItem.name === item.name)?.image ?? item.image;
+          return (
           <View key={item.id} style={styles.itemRow}>
+            {picture ? (
+              <Image source={picture} style={styles.itemImage} contentFit="cover" />
+            ) : null}
             <Text style={[styles.itemName, { color: theme.text }]}>{item.name}</Text>
             <CartCounter 
               quantity={item.quantity || 1} 
@@ -55,7 +62,8 @@ export default function Cart() {
             />
             <Feather name="trash" size={20} color="#c1c7c3" onPress={() => deleteItem(item.id)}/>
           </View>
-        ))}
+          );
+        })}
       </View>
       <OrderNote note={note}
       onChangeNote={updateNote}/>
@@ -100,5 +108,10 @@ const styles = StyleSheet.create({
   itemName: {
     flex: 1,
     fontSize: 16,
+  },
+  itemImage: {
+    width: 56,
+    height: 72,
+    borderRadius: 8,
   },
 });

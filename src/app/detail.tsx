@@ -39,7 +39,7 @@ export default function Detail() {
       <Pressable
         onPress={() => {
           if (item) {
-            addItem(item.name, quantity);
+            addItem(item.name, quantity, item.image);
           }
           Alert.alert( `${item?.name} is added to cart `);
         }}

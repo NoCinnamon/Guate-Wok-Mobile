@@ -26,7 +26,7 @@ export default function MenuCard({
         <Text style={styles.name}>{name}</Text>
           <Button buttonName='Add' 
            onPress={() => {
-            addItem(name);
+            addItem(name, 1, image);
             Alert.alert( `${name} is added to cart `);
           }}
           style={styles.addButton} />
