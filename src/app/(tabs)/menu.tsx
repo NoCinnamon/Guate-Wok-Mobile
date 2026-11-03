@@ -1,41 +1,17 @@
-import { Text, View, StyleSheet, FlatList } from "react-native";
-import { menuItems } from "../../data/menu";
-import MenuCard from "../../components/MenuCard";
-import { router } from "expo-router";
-import { useTheme } from "../../context/ThemeContext";
-
+import { StyleSheet, View } from "react-native";
+import MenuList from "../../components/MenuList";
 
 export default function Menu() {
-  const { theme } = useTheme();
-    return (
-      <View style={[styles.container, {backgroundColor: theme.background}]}>
-        <FlatList
-          numColumns={2}
-          contentContainerStyle={styles.list}
-          keyExtractor={(item) => item.id}
-          data={menuItems}
-          renderItem={({item}) => (
-            <MenuCard name={item.name} image={item.image} 
-            onPress={() => 
-              router.push({
-                pathname: "/detail",
-                params: { id: item.id },
-              })
-            }/>
-          )}
-        />
-      </View>
-    );
-  }
-
+  return (
+    <View style={styles.container}>
+      <MenuList />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#ffffff",
   },
-  list: {
-    paddingTop: 110,
-  },
-  addButton: {
-  }
 });

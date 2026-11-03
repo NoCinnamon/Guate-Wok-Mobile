@@ -7,10 +7,12 @@ import { useCart } from "../context/CartContext";
 
 export default function MenuCard({
   name,
+  price,
   image,
   onPress,
 }: {
   name: string;
+  price: number;
   image: number;
   onPress: () => void;
 }) {
@@ -23,7 +25,10 @@ export default function MenuCard({
         <Pressable onPress={onPress}>
           <Image source={image} style={styles.image} contentFit="cover" />
         </Pressable>
-        <Text style={styles.name}>{name}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.price}>${price}</Text>
+        </View>
           <Button buttonName='Add' 
            onPress={() => {
             addItem(name, 1, image);
@@ -57,11 +62,23 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 140,
   },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 8,
+    gap: 8,
+  },
   name: {
-    textAlign: "center",
+    flex: 1,
     fontWeight: "700",
     fontSize: 16,
-    padding: 12,
+  },
+  price: {
+    fontSize: 16,
+    color: "#6b7280",
   },
   addButton: {
     alignSelf: "center",

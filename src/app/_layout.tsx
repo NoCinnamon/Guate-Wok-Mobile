@@ -1,16 +1,14 @@
 import CartProvider from "@/context/CartContext";
-import { ThemeProvider } from "@/context/ThemeContext";
 import { Image } from "expo-image";
 import { Stack, router } from "expo-router";
 import { Pressable, StyleSheet } from "react-native";
-import ThemeSetting from "../components/ThemeSetting";
+import Language from "../components/language";
 import { Ionicons } from "@expo/vector-icons";
 
 
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
       <CartProvider>
         <Stack
           screenOptions={{
@@ -33,7 +31,7 @@ export default function RootLayout() {
               {
                 type: "custom",
                 hidesSharedBackground: true,
-                element: <ThemeSetting />,
+                element: <Language />,
               },
             ],
           }}
@@ -54,16 +52,8 @@ export default function RootLayout() {
               </Pressable>
             </Stack.Toolbar>
           </Stack.Screen>
-          <Stack.Screen name="theme" options={{ headerShown: false }} >
-            <Stack.Toolbar placement="left">
-              <Pressable onPress={() => router.back()} style={styles.backArrow}>
-                <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
-              </Pressable>
-            </Stack.Toolbar>
-          </Stack.Screen>
         </Stack>
       </CartProvider>
-    </ThemeProvider>
   );
 }
 

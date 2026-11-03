@@ -1,13 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text, View, StyleSheet,ScrollView } from "react-native";
-import{ useEffect, useState } from "react";
+import { Alert, Platform, View, StyleSheet, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
 import OrderNote from "../../components/OrderNote";
+import CartItems from "../../components/CartItems";
 import { useCart } from "../../context/CartContext";
-import { Feather } from "@expo/vector-icons";
-import CartCounter  from "../../components/CartCounter"
-import { useTheme } from "../../context/ThemeContext";
-import { Image } from "expo-image";
 import { menuItems } from "@/data/menu";
+import CartTotal from "../../components/CartTotal";
 
 
 const storeNoteData = async (note:string) => {
@@ -19,9 +18,14 @@ const storeNoteData = async (note:string) => {
 };
 
 export default function Cart() {
-  const { items, decreaseQuantity, increaseQuantity, deleteItem } = useCart();                      //  the function a screen calls to get the cart.
+  const { items } = useCart();
   const [note,setNote] = useState("");
-  const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
+  const aboveTabs = Math.max(insets.bottom, Platform.OS === "ios" ? 88 : 64);
+  const total = items.reduce((sum, item) => {
+    const dish = menuItems.find((menuItem) => menuItem.name === item.name);
+    return sum + (dish?.price ?? 0) * item.quantity;
+  }, 0);
   
 
   function updateNote(text: string) {
@@ -42,32 +46,22 @@ export default function Cart() {
 
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]} 
-     contentContainerStyle={styles.content}>
-
-      <View style={styles.cartItems}>
-        <Text style={[styles.cartTitleText, { color: theme.text }]}> My Items:</Text>
-        {items.map((item) => {
-          const picture = menuItems.find((menuItem) => menuItem.name === item.name)?.image ?? item.image;
-          return (
-          <View key={item.id} style={styles.itemRow}>
-            {picture ? (
-              <Image source={picture} style={styles.itemImage} contentFit="cover" />
-            ) : null}
-            <Text style={[styles.itemName, { color: theme.text }]}>{item.name}</Text>
-            <CartCounter 
-              quantity={item.quantity || 1} 
-              onIncrease={() => increaseQuantity(item.id)}
-              onDecrease={() => decreaseQuantity(item.id)}
-            />
-            <Feather name="trash" size={20} color="#c1c7c3" onPress={() => deleteItem(item.id)}/>
-          </View>
-          );
-        })}
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.list}
+        contentContainerStyle={[styles.content, { paddingTop: insets.top }]}
+      >
+        <CartItems />
+        <OrderNote note={note} onChangeNote={updateNote} />
+      </ScrollView>
+      
+      <View style={{ marginBottom: aboveTabs }}>
+        <CartTotal
+          total={total}
+          onCheckout={() => Alert.alert("Checkout", `Your total is $${total}.`)}
+        />
       </View>
-      <OrderNote note={note}
-      onChangeNote={updateNote}/>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -75,43 +69,12 @@ export default function Cart() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: "#F4EFE6",
-    paddingTop: 16,
+    backgroundColor: "#ffffff",
+  },
+  list: {
+    flex: 1,
   },
   content: {
     flexGrow: 1,
-  },
-  cartItems: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 16,
-    marginHorizontal: 16,
-    marginVertical: 12,
-    gap: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.22,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  cartTitleText: {
-    color: "#1d4ed8",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  itemRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 12,
-  },
-  itemName: {
-    flex: 1,
-    fontSize: 16,
-  },
-  itemImage: {
-    width: 56,
-    height: 72,
-    borderRadius: 8,
   },
 });

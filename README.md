@@ -181,6 +181,23 @@ when clicking trashcan icon, for example, deleting the taco, when the loop sees 
 This is a component taht shows minus/plus button for quantity of the items in cart.
 It has the value of in/decrease functionnality and a quantity in between the 2 buttons.
 
+
+## Cart total
+
+The cart list stores a name and a quantity. It does not store the price. The price stays on each dish in `src/data/menu.ts`.
+
+`src/app/(tabs)/cart.tsx` adds the prices with `reduce`(a built-in JavaScript array method). It starts at `0` and walks every cart row. For each row it finds the menu dish with the same name, then adds `price * quantity` to the sum.
+
+```tsx
+const total = items.reduce((sum, item) => {
+  const dish = menuItems.find((menuItem) => menuItem.name === item.name);
+  return sum + (dish?.price ?? 0) * item.quantity;
+}, 0);
+```
+
+Two tacos at $3 and one kimbap at $8 are `0 + (3 * 2) + (8 * 1)`, which is `14`. That number is passed to `CartTotal` as `total`, and the bar at the bottom shows `$14`. `CartTotal` only draws the label, the price, and the Checkout button. It does not do the math.
+
+
 ## HIG
 
 1. https://m3.material.io/foundations/designing/structure
@@ -220,3 +237,15 @@ Cards.
 
 In src/app/(tabs)/cart.tsx, the cart list and the order note in white cards with padding.
 In src/components/MenuCard.tsx, Each menu dish is its own card with padding 16.
+
+## Safe area
+
+https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/#usesafeareainsets
+
+`useSafeAreaInsets` comes from `react-native-safe-area-context`. It returns how many points to keep clear of the notch, the status bar, and the home indicator. The four values are `top`, `bottom`, `left`, and `right`.
+
+On the cart screen the total and Checkout button were hidden behind the tab bar. `insets.bottom` is only the home-indicator space, and the tab bar is taller than that, so the screen uses whichever number is larger:
+
+```tsx
+const insets = useSafeAreaInsets();
+const aboveTabs = Math.max(insets.bottom, Platform.OS === "ios" ? 88 : 64);
