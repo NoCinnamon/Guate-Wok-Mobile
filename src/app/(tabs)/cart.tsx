@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert, Platform, View, StyleSheet, ScrollView } from "react-native";
+import { Platform, View, StyleSheet, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import OrderNote from "../../components/OrderNote";
 import CartItems from "../../components/CartItems";
 import { useCart } from "../../context/CartContext";
 import { menuItems } from "@/data/menu";
-import CartTotal from "../../components/CartTotal";
+import Stripe from "../../components/Stripe";
 
 
 const storeNoteData = async (note:string) => {
@@ -56,10 +56,7 @@ export default function Cart() {
       </ScrollView>
       
       <View style={{ marginBottom: aboveTabs }}>
-        <CartTotal
-          total={total}
-          onCheckout={() => Alert.alert("Checkout", `Your total is $${total}.`)}
-        />
+        <Stripe total={total} />
       </View>
     </View>
   );

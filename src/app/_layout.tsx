@@ -4,11 +4,12 @@ import { Stack, router } from "expo-router";
 import { Pressable, StyleSheet } from "react-native";
 import Language from "../components/language";
 import { Ionicons } from "@expo/vector-icons";
-
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 
 export default function RootLayout() {
   return (
+    <StripeProvider publishableKey="pk_test_51UXYpbM9ocmXjQNwrRbgsJoCDFHrnWdiGrq0WaXP16iuoKkWuN69iUIw7m7f9qcqOloquPGeb10tybmFLCLtmCPQ00Jp2eFdlJ" urlScheme="guatewokmobile">
       <CartProvider>
         <Stack
           screenOptions={{
@@ -54,6 +55,9 @@ export default function RootLayout() {
           </Stack.Screen>
         </Stack>
       </CartProvider>
+    
+    </StripeProvider>
+
   );
 }
 

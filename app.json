@@ -43,6 +43,13 @@
             "enableSceneSupport": true
           }
         }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "",
+          "enableGooglePay": false
+        }
       ]
     ],
     "experiments": {
