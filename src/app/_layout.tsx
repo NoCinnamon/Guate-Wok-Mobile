@@ -5,59 +5,62 @@ import { Pressable, StyleSheet } from "react-native";
 import Language from "../components/language";
 import { Ionicons } from "@expo/vector-icons";
 import { StripeProvider } from "@stripe/stripe-react-native";
+import { LanguageProvider } from '../context/LanguageContext'; // Adjust path
 
 
 export default function RootLayout() {
   return (
-    <StripeProvider publishableKey="pk_test_51UXYpbM9ocmXjQNwrRbgsJoCDFHrnWdiGrq0WaXP16iuoKkWuN69iUIw7m7f9qcqOloquPGeb10tybmFLCLtmCPQ00Jp2eFdlJ" urlScheme="guatewokmobile">
-      <CartProvider>
-        <Stack
-          screenOptions={{
-            unstable_headerLeftItems: () => [
-              {
-                type: "custom",
-                hidesSharedBackground: true,
-                element: (
-                  <Pressable style={styles.logoButton} onPress={() => router.navigate("/")}>
-                    <Image
-                      source={require("../../assets/images/truckIcon.png")}
-                      style={styles.logo}
-                      contentFit="contain"
-                    />
-                  </Pressable>
-                ),
-              },
-            ],
-            unstable_headerRightItems: () => [
-              {
-                type: "custom",
-                hidesSharedBackground: true,
-                element: <Language />,
-              },
-            ],
-          }}
-        >
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              title: "",
-              headerTransparent: true,
-              headerShadowVisible: false,
+    <LanguageProvider>
+
+      <StripeProvider publishableKey="pk_test_51UXYpbM9ocmXjQNwrRbgsJoCDFHrnWdiGrq0WaXP16iuoKkWuN69iUIw7m7f9qcqOloquPGeb10tybmFLCLtmCPQ00Jp2eFdlJ" urlScheme="guatewokmobile">
+        <CartProvider>
+          <Stack
+            screenOptions={{
+              unstable_headerLeftItems: () => [
+                {
+                  type: "custom",
+                  hidesSharedBackground: true,
+                  element: (
+                    <Pressable style={styles.logoButton} onPress={() => router.navigate("/")}>
+                      <Image
+                        source={require("../../assets/images/truckIcon.png")}
+                        style={styles.logo}
+                        contentFit="contain"
+                      />
+                    </Pressable>
+                  ),
+                },
+              ],
+              unstable_headerRightItems: () => [
+                {
+                  type: "custom",
+                  hidesSharedBackground: true,
+                  element: <Language />,
+                },
+              ],
             }}
-          />
+          >
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                title: "",
+                headerTransparent: true,
+                headerShadowVisible: false,
+              }}
+            />
 
-          <Stack.Screen name="detail" options={{ headerShown: true }} >
-            <Stack.Toolbar placement="left">
-              <Pressable onPress={() => router.back()} style={styles.backArrow}>
-                <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
-              </Pressable>
-            </Stack.Toolbar>
-          </Stack.Screen>
-        </Stack>
-      </CartProvider>
-    
-    </StripeProvider>
-
+            <Stack.Screen name="detail" options={{ headerShown: true }} >
+              <Stack.Toolbar placement="left">
+                <Pressable onPress={() => router.back()} style={styles.backArrow}>
+                  <Ionicons name="chevron-back" size={28} color="#1d4ed8" />
+                </Pressable>
+              </Stack.Toolbar>
+            </Stack.Screen>
+          </Stack>
+        </CartProvider>
+      
+      </StripeProvider>
+    </LanguageProvider>
   );
 }
 

@@ -5,12 +5,15 @@ import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import CartCounter from "../components/CartCounter";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Detail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const item = menuItems.find((menuItem) => menuItem.id === id);
   const { addItem } = useCart();
+  const { t } = useLanguage();
   const [quantity, setQuantity] = useState(1);
+  const dishName = item ? t(item.nameKey) : "";
 
   return (
     <View style={styles.container}>
@@ -23,7 +26,7 @@ export default function Detail() {
           />
         )}
         <View style={styles.nameAndCounter}>
-          <Text style={styles.ingredientsTitle}>{item?.name}</Text>
+          <Text style={styles.ingredientsTitle}>{dishName}</Text>
           <CartCounter
             onIncrease={() => setQuantity((current) => current + 1)}
             onDecrease={() =>
@@ -32,8 +35,8 @@ export default function Detail() {
             quantity={quantity}
           />
         </View>
-        <Text style={styles.ingredientsTitle}>Main Ingredients</Text>
-        <Text style={styles.ingredientsText}>{item?.ingredients}</Text>
+        <Text style={styles.ingredientsTitle}>{t("mainIngredients")}</Text>
+        <Text style={styles.ingredientsText}>{item ? t(item.ingredientsKey) : ""}</Text>
       </View>
 
       <Pressable
@@ -41,11 +44,11 @@ export default function Detail() {
           if (item) {
             addItem(item.name, quantity, item.image);
           }
-          Alert.alert( `${item?.name} is added to cart `);
+          Alert.alert(t("addedToCart", { name: dishName }));
         }}
         style={styles.addToCartButton}
       >
-        <Text style={styles.addToCartText}>Add to Cart</Text>
+        <Text style={styles.addToCartText}>{t("addToCart")}</Text>
       </Pressable>
 
     </View>

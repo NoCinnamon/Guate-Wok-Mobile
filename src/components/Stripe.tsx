@@ -1,9 +1,11 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import { Alert } from "react-native";
 import CartTotal from "./CartTotal";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Stripe({ total }: { total: number }) {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const { t } = useLanguage();
 
   async function checkout() {
     const amount = Math.round(total * 100);
@@ -35,7 +37,7 @@ export default function Stripe({ total }: { total: number }) {
             callback({
               error: {
                 code: "Failed",
-                message: "Payment could not start.",
+                message: t("paymentCouldNotStart"),
               },
             });
           }
@@ -44,16 +46,16 @@ export default function Stripe({ total }: { total: number }) {
     });
 
     if (error) {
-      Alert.alert("Checkout", error.message);
+      Alert.alert(t("checkout"), error.message);
       return;
     }
 
     const result = await presentPaymentSheet();
     if (result.error) {
-      Alert.alert("Checkout", result.error.message);
+      Alert.alert(t("checkout"), result.error.message);
       return;
     }
-    Alert.alert("Checkout", "Payment complete.");
+    Alert.alert(t("checkout"), t("paymentComplete"));
   }
 
   return <CartTotal total={total} onCheckout={checkout} />;

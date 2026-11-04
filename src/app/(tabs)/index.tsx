@@ -1,8 +1,10 @@
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import HomeButtons from "../../components/HomeButtons";
+import { useLanguage } from "../../context/LanguageContext";
 
 
 export default function Index() {
+  const { t } = useLanguage();
 
   return (
     <View style={styles.container}>
@@ -11,10 +13,10 @@ export default function Index() {
         resizeMode="cover"
         style={styles.background}
       >
-        <Text style={styles.welcome}>Welcome</Text>
+        <Text style={styles.welcome}>{t("welcome")}</Text>
         
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>READY TO ORDER?</Text>
+          <Text style={styles.cardTitle}>{t("readyToOrder")}</Text>
           <HomeButtons />
         </View>
       </ImageBackground>

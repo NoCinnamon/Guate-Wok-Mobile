@@ -2,21 +2,26 @@ import { Image } from "expo-image";
 import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import Button from "./Button";
 import { useCart } from "../context/CartContext";
+import { useLanguage } from "../context/LanguageContext";
 
 
 
 export default function MenuCard({
   name,
+  nameKey,
   price,
   image,
   onPress,
 }: {
   name: string;
+  nameKey: string;
   price: number;
   image: number;
   onPress: () => void;
 }) {
   const { addItem } = useCart();
+  const { t } = useLanguage();
+  const dishName = t(nameKey);
 
 
   return (
@@ -26,13 +31,13 @@ export default function MenuCard({
           <Image source={image} style={styles.image} contentFit="cover" />
         </Pressable>
         <View style={styles.nameRow}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name}>{dishName}</Text>
           <Text style={styles.price}>${price}</Text>
         </View>
-          <Button buttonName='Add' 
+          <Button buttonName={t("add")}
            onPress={() => {
             addItem(name, 1, image);
-            Alert.alert( `${name} is added to cart `);
+            Alert.alert(t("addedToCart", { name: dishName }));
           }}
           style={styles.addButton} />
       </View>

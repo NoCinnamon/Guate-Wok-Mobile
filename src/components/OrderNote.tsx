@@ -1,4 +1,5 @@
 import { StyleSheet, View , Text, TextInput} from "react-native";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function OrderNote ({
   note,
@@ -7,13 +8,15 @@ export default function OrderNote ({
   note:string;
   onChangeNote: (text: string) => void;
 }){
+  const { t } = useLanguage();
+
   return (
     <View style={styles.noteCard}>
-      <Text style={styles.noteText}>Additional Information? </Text>
+      <Text style={styles.noteText}>{t("additionalInfo")}</Text>
       <TextInput style={styles.input}
       value={note}
       onChangeText={onChangeNote}
-      placeholder="Anything else we should know?"
+      placeholder={t("notePlaceholder")}
       placeholderTextColor="a8a29e"
       multiline
       />

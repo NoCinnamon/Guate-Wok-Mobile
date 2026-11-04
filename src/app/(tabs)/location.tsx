@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Text, View, StyleSheet, Platform } from "react-native";
 import { AppleMaps, useLocationPermissions } from "expo-maps";
+import { useLanguage } from "../../context/LanguageContext";
 
 const truckLocation = {
   latitude: 37.104472,
@@ -9,6 +10,7 @@ const truckLocation = {
 
 export default function Location() {
   const [status, requestPermission] = useLocationPermissions();
+  const { t } = useLanguage();
   const asked = useRef(false);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function Location() {
   if (Platform.OS !== "ios") {
     return (
       <View style={styles.location}>
-        <Text>Just for iPhone now.</Text>
+        <Text>{t("iphoneOnly")}</Text>
       </View>
     );
   }

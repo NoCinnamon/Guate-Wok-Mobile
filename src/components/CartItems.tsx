@@ -4,13 +4,15 @@ import { StyleSheet, Text, View } from "react-native";
 import { menuItems } from "../data/menu";
 import { useCart } from "../context/CartContext";
 import CartCounter from "./CartCounter";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function CartItems() {
   const { items, decreaseQuantity, increaseQuantity, deleteItem } = useCart();
+  const { t } = useLanguage();
 
   return (
     <View style={styles.cartItems}>
-      <Text style={styles.cartTitleText}> My Items:</Text>
+      <Text style={styles.cartTitleText}>{t("myItems")}</Text>
       {items.map((item) => {
         const menuItem = menuItems.find((dish) => dish.name === item.name);
         const picture = menuItem?.image ?? item.image;
@@ -20,7 +22,7 @@ export default function CartItems() {
               <Image source={picture} style={styles.itemImage} contentFit="cover" />
             ) : null}
             <View style={styles.itemInfo}>
-              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemName}>{menuItem ? t(menuItem.nameKey) : item.name}</Text>
               <View style={styles.priceRow}>
                 {menuItem ? <Text style={styles.itemPrice}>${menuItem.price}</Text> : null}
                 <CartCounter

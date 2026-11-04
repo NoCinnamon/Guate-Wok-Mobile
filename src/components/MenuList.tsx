@@ -13,6 +13,7 @@ export default function MenuList() {
       renderItem={({ item }) => (
         <MenuCard
           name={item.name}
+          nameKey={item.nameKey}
           price={item.price}
           image={item.image}
           onPress={() =>
