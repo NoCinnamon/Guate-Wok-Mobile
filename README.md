@@ -5,13 +5,17 @@ wehlcome home view,
 
 - Menu, for brose the menu item.Click the picture, it will bring you to detail of this item.
 - Detail: shows the ingreadiants for the current item, as well as a add button to add it into cart.
-- Location(only ios for now): to check the current location for the foodtruck.
+- Location: to check the current location for the foodtruck. iPhone uses Apple Maps. Android uses Google Maps.
 - Cart: shows the items has been added to the cart and a option of changing the quantity of the item and another option for delete the item.  
 User can alos leave the notes here for special request to the chef, such as "no onion"
 
 npx expo run:ios
 
-Wireframe:
+npx expo run:android
+
+
+
+## Wireframe:
 ![Wireframe](assets/images/appWireframe.jpg)
 
 ## Bottom navigation
@@ -47,7 +51,7 @@ In DeviceHub, Device -> Location -> then pick a location, it will appear in a bl
 
 ## Location Map 
 
-Platform.OS = 'ios':  
+### Platform.OS = 'ios':  
 package( expo-map ): `npx expo install expo-maps`
 
 two other things to install so map could run on the iPhone:
@@ -57,8 +61,6 @@ two other things to install so map could run on the iPhone:
 
 location.tsx:  
 `import { AppleMaps } from "expo-maps";`
-
-
 
 iOS will only show that permission ask dialog if the installed app contains a reason string, which is declared in `app.json` on the expo-maps plugin:
 
@@ -70,8 +72,28 @@ iOS will only show that permission ask dialog if the installed app contains a re
   "locationPermission": "Allow Guate Wok to use your location to show you on the map next to the truck."
 }
 ```
+<img src="assets/images/ios-map.png" alt="iPhone map" width="280" />
 
+### Platform.OS = 'android':  
+The same `expo-maps` package. 
+On Android the screen uses `GoogleMaps.View`;
+On iphone the screen uses `AppleMaps.View`;
 
+location.tsx:
+
+```bash
+import { AppleMaps, GoogleMaps, useLocationPermissions } from "expo-maps";
+
+if (Platform.OS === "android") {
+  return (
+    <GoogleMaps.View
+      cameraPosition={{ coordinates: truckLocation, zoom: 15 }}
+      markers={[{ id: "truck", coordinates: truckLocation, title: "GuateWok" }]}
+    />
+  );
+}
+```
+<img src="assets/images/andorid-map.png" alt="Android map" width="280" />
 
 ## Cart
 
@@ -181,7 +203,6 @@ when clicking trashcan icon, for example, deleting the taco, when the loop sees 
 This is a component taht shows minus/plus button for quantity of the items in cart.
 It has the value of in/decrease functionnality and a quantity in between the 2 buttons.
 
-
 ## Cart total
 
 The cart list stores a name and a quantity. It does not store the price. The price stays on each dish in `src/data/menu.ts`.
@@ -196,7 +217,6 @@ const total = items.reduce((sum, item) => {
 ```
 
 Two tacos at $3 and one kimbap at $8 are `0 + (3 * 2) + (8 * 1)`, which is `14`. That number is passed to `CartTotal` as `total`, and the bar at the bottom shows `$14`. `CartTotal` only draws the label, the price, and the Checkout button. It does not do the math.
-
 
 ## HIG
 
@@ -249,3 +269,4 @@ On the cart screen the total and Checkout button were hidden behind the tab bar.
 ```tsx
 const insets = useSafeAreaInsets();
 const aboveTabs = Math.max(insets.bottom, Platform.OS === "ios" ? 88 : 64);
+```

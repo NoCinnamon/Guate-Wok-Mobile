@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Text, View, StyleSheet, Platform } from "react-native";
-import { AppleMaps, useLocationPermissions } from "expo-maps";
+import { AppleMaps, GoogleMaps, useLocationPermissions } from "expo-maps";
 import { useLanguage } from "../../context/LanguageContext";
 
 const truckLocation = {
@@ -21,29 +21,46 @@ export default function Location() {
     void requestPermission();
   }, [status, requestPermission]);
 
-  if (Platform.OS !== "ios") {
+  if (Platform.OS === "android") {
     return (
-      <View style={styles.location}>
-        <Text>{t("iphoneOnly")}</Text>
-      </View>
+      <GoogleMaps.View
+        style={{ flex: 1 }}
+        cameraPosition={{ coordinates: truckLocation, zoom: 15 }}
+        markers={[
+          {
+            id: "truck",
+            coordinates: truckLocation,
+            title: "GuateWok",
+          },
+        ]}
+      />
     );
   }
+
+  if (Platform.OS === "ios") {
+    return (
+      <AppleMaps.View
+        style={{ flex: 1 }}
+        cameraPosition={{ coordinates: truckLocation, zoom: 15 }}
+        properties={{ isMyLocationEnabled: status?.granted === true }}
+        uiSettings={{ myLocationButtonEnabled: true }}
+        markers={[
+          {
+            id: "truck",
+            coordinates: truckLocation,
+            title: "GuateWok",
+            systemImage: "truck.box.fill",
+            tintColor: "orange",
+          },
+        ]}
+      />
+    );
+  }
+
   return (
-    <AppleMaps.View
-      style={{ flex: 1 }}
-      cameraPosition={{ coordinates: truckLocation, zoom: 15 }}
-      properties={{ isMyLocationEnabled: status?.granted === true }}
-      uiSettings={{ myLocationButtonEnabled: true }}
-      markers={[
-        {
-          id: "truck",
-          coordinates: truckLocation,
-          title: "GuateWok",
-          systemImage: "truck.box.fill",
-          tintColor: "orange",
-        },
-      ]}
-    />
+    <View style={styles.location}>
+      <Text>{t("iphoneOnly")}</Text>
+    </View>
   );
 }
 

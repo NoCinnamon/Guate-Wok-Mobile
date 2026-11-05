@@ -11,10 +11,16 @@
       "bundleIdentifier": "com.smokeyl.Guate-Wok-Mobile"
     },
     "android": {
+      "package": "com.smokeyl.guatewokmobile",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBMSi2BdDK_5twqIZKX6lyLce-6P13CB18"
+        }
+      }
     },
     "web": {
       "output": "static"
